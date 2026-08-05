@@ -1,10 +1,36 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Mail, Phone, Search, Menu, ChevronDown } from "lucide-react";
+import {
+  MapPin,
+  Mail,
+  Phone,
+  Search,
+  Menu,
+  ChevronDown,
+  ChevronUp,
+  ArrowRight,
+  ArrowUpRight,
+} from "lucide-react";
 
 const navLinks = [
-  { label: "HOME", href: "/", active: true },
-  { label: "ABOUT UAMC", href: "/about", dropdown: true },
+  { label: "HOME", href: "/" },
+  {
+    label: "ABOUT UAMC",
+    href: "/about",
+    dropdown: [
+      { label: "Overview", tab: "Overview" },
+      { label: "History of UAMC", tab: "History of UAMC" },
+      { label: "Vision & Mission", tab: "Vision & Mission" },
+      { label: "Aim & Objective", tab: "Aim & Objective" },
+      { label: "Organizational Structure", tab: "Organizational Structure" },
+      { label: "Founder Members", tab: "Founder Members" },
+      { label: "EC Members", tab: "EC Members" },
+      { label: "GB Members", tab: "GB Members" },
+    ],
+  },
   { label: "FACILITIES", href: "/facilities", dropdown: true },
   { label: "ADMISSION", href: "/admission", dropdown: true },
   { label: "NOTICE & MEDIA", href: "/notice" },
@@ -19,72 +45,86 @@ const socials = [
 ];
 
 export default function Navbar() {
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
   return (
-    <header className="w-full font-sans bg-white">
-      {/* Top info bar */}
-      <div className="bg-[#fcfcfc] border-b border-gray-200/70 hidden lg:block">
-        <div className="max-w-[1400px] mx-auto px-8 py-2.5 flex items-center justify-between text-[13px] text-gray-600">
-          <div className="flex items-center gap-8">
+    <header className="w-full relative font-sans">
+      
+      {/* Top Info Bar */}
+      <div className="bg-[#f9fbf9] border-b border-dashed border-gray-200 hidden lg:block">
+        <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs text-gray-600">
+          <div className="flex items-center gap-6">
             <span className="flex items-center gap-2">
-              <MapPin size={18} className="text-gray-500 stroke-[1.5]" />
-              House - 34, Road - 4, Sector - 9, Sonargaon Janapath, Uttara Model Town
+              <MapPin size={15} className="text-gray-500" />
+              <span>House - 34, Road - 4, Sector - 9, Sonargaon Janapath, Uttara Model Town</span>
             </span>
             <span className="flex items-center gap-2">
-              <Mail size={18} className="text-gray-500 stroke-[1.5]" />
-              info@uamc.com
+              <Mail size={15} className="text-gray-500" />
+              <span>info@uamc.com</span>
             </span>
             <span className="flex items-center gap-2">
-              <Phone size={18} className="text-gray-500 stroke-[1.5]" />
-              +880 1700-220000
+              <Phone size={15} className="text-gray-500" />
+              <span>+880 1700-220000</span>
             </span>
           </div>
 
-          <div className="flex items-center gap-6 font-medium text-gray-700">
-            <Link href="/student-portal" className="hover:text-emerald-600 transition-colors">
+          <div className="flex items-center gap-5 text-gray-700 font-medium">
+            <Link href="/student-portal" className="hover:text-[#008d44] transition-colors">
               Student Portal
             </Link>
-            <Link href="/teachers-portal" className="hover:text-emerald-600 transition-colors">
+            <Link href="/teachers-portal" className="hover:text-[#008d44] transition-colors">
               Teachers Portal
             </Link>
-            <Link href="/alumni" className="hover:text-emerald-600 transition-colors">
+            <Link href="/alumni" className="hover:text-[#008d44] transition-colors">
               Alumni
             </Link>
-            <Link href="/events" className="hover:text-emerald-600 transition-colors">
+            <Link href="/events" className="hover:text-[#008d44] transition-colors">
               Events
             </Link>
             <span className="text-gray-300 font-light">|</span>
-            <Link href="/contact" className="hover:text-emerald-600 transition-colors">
+            <Link href="/contact" className="hover:text-[#008d44] transition-colors">
               Contact Us
             </Link>
           </div>
         </div>
       </div>
 
-      {/* Main navigation bar */}
-      <div className="border-b border-gray-200/80">
-        <div className="max-w-[1400px] mx-auto px-8 py-4 flex items-center justify-between">
+      {/* Main Navigation Bar */}
+      <div className="bg-white border-b border-gray-100 relative z-30 py-3">
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
           
-          {/* Logo + Socials Section */}
-          <div className="flex items-center gap-6">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/logo.png" alt="UAMC Logo" width={44} height={44} className="shrink-0" />
+          {/* Logo & Social Links */}
+          <div className="flex items-center gap-4">
+            <Link href="/" className="flex items-center gap-3 shrink-0">
+              <Image
+                src="/logo.png"
+                alt="UAMC Logo"
+                width={48}
+                height={48}
+                className="object-contain"
+              />
               <div>
-                <p className="font-extrabold text-black text-lg leading-none tracking-tight">Uttara Adhunik</p>
-                <p className="text-[13px] text-gray-600 font-medium leading-tight mt-0.5">Medical College (UAMC)</p>
+                <p className="font-serif font-bold text-lg text-[#1a1a1a] leading-tight">
+                  Uttara Adhunik
+                </p>
+                <p className="text-xs text-gray-500 leading-tight">
+                  Medical College (UAMC)
+                </p>
               </div>
             </Link>
 
-            <span className="hidden lg:block h-8 w-[1px] bg-gray-300 ml-2"></span>
+            <div className="hidden lg:block w-[1px] h-8 bg-gray-300 mx-1" />
 
-            <div className="hidden lg:flex items-center gap-4 text-black">
+            <div className="hidden lg:flex items-center gap-3 text-gray-800">
               {socials.map((s) => (
                 <svg
                   key={s.name}
                   viewBox="0 0 24 24"
-                  width={15}
-                  height={15}
+                  width={14}
+                  height={14}
                   fill="currentColor"
-                  className="hover:text-emerald-600 cursor-pointer transition-colors"
+                  className="hover:text-[#008d44] cursor-pointer transition-colors"
                 >
                   <path d={s.path} />
                 </svg>
@@ -92,37 +132,87 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Nav Links */}
-          <nav className="hidden lg:flex items-center gap-8 text-[13px] font-bold tracking-wider text-gray-800">
-            {navLinks.map((link) => (
-              <div key={link.label} className="relative py-2">
-                <Link
-                  href={link.href}
-                  className={`flex items-center gap-1.5 transition-colors ${
-                    link.active ? "text-emerald-600" : "hover:text-emerald-600"
-                  }`}
+          {/* Navigation Links */}
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-xs font-bold tracking-wider text-[#1a1a1a]">
+            {navLinks.map((link) => {
+              const isOpen = openDropdown === link.label;
+
+              return (
+                <div
+                  key={link.label}
+                  className="relative py-3"
+                  onMouseEnter={() => link.dropdown && setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  {link.label}
-                  {link.dropdown && <ChevronDown size={16} className="stroke-[2.5]" />}
-                </Link>
-                {link.active && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-emerald-600"></span>
-                )}
-              </div>
-            ))}
+                  <Link
+                    href={link.href}
+                    className={`flex items-center gap-1.5 pb-1 transition-colors ${
+                      isOpen
+                        ? "text-[#008d44] border-b-2 border-[#008d44]"
+                        : "hover:text-[#008d44]"
+                    }`}
+                  >
+                    <span>{link.label}</span>
+                    {link.dropdown &&
+                      (isOpen ? (
+                        <ChevronUp size={16} className="text-[#008d44]" />
+                      ) : (
+                        <ChevronDown size={16} />
+                      ))}
+                  </Link>
+
+                  {/* Dropdown Box matching Screenshot */}
+                  {Array.isArray(link.dropdown) && isOpen && (
+                    <div className="absolute left-0 top-full w-72 bg-[#7b8e83]/30 backdrop-blur-md shadow-2xl z-50 overflow-hidden">
+                      {link.dropdown.map((item) => {
+                        const isHovered = hoveredItem === item.tab;
+
+                        return (
+                          <Link
+                            key={item.tab}
+                            href={`${link.href}?tab=${encodeURIComponent(item.tab)}`}
+                            onMouseEnter={() => setHoveredItem(item.tab)}
+                            onMouseLeave={() => setHoveredItem(null)}
+                            className={`flex items-center justify-between px-6 py-3.5 text-sm font-medium transition-colors border-b border-[#fcd34d]/60 last:border-b-0 ${
+                              isHovered
+                                ? "bg-[#ffc82e] text-[#1a1a1a] font-semibold"
+                                : "text-white hover:bg-[#ffc82e] hover:text-[#1a1a1a]"
+                            }`}
+                          >
+                            <span>{item.label}</span>
+                            {isHovered ? (
+                              <ArrowUpRight size={18} className="text-[#1a1a1a] stroke-[2.5]" />
+                            ) : (
+                              <ArrowRight size={18} className="text-white/90" />
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
-          {/* Right Action Icons */}
-          <div className="hidden lg:flex items-center gap-5">
-            <span className="h-6 w-[1px] bg-gray-300"></span>
-            <Search size={22} className="cursor-pointer text-black hover:text-emerald-600 transition-colors" />
-            <Menu size={24} className="cursor-pointer text-black hover:text-emerald-600 transition-colors stroke-[2]" />
+          {/* Search & Menu Icons */}
+          <div className="hidden lg:flex items-center gap-4">
+            <div className="w-[1px] h-6 bg-gray-300" />
+            <button className="p-1 text-[#1a1a1a] hover:text-[#008d44] transition-colors">
+              <Search size={20} strokeWidth={2} />
+            </button>
+            <button className="p-1 text-[#1a1a1a] hover:text-[#008d44] transition-colors">
+              <Menu size={22} strokeWidth={2} />
+            </button>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <Menu size={24} className="lg:hidden cursor-pointer text-black" />
+          <button className="lg:hidden p-1 text-gray-800">
+            <Menu size={24} />
+          </button>
+
         </div>
       </div>
+
     </header>
   );
 }
