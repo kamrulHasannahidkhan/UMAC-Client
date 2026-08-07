@@ -34,7 +34,7 @@ export default function FacilitiesSection() {
   }, []);
 
   if (loading) {
-    return <section className="w-full h-[600px] bg-gray-50 animate-pulse" />;
+    return <section className="w-full h-[700px] bg-gray-50 animate-pulse" />;
   }
 
   if (facilities.length === 0) {
@@ -48,16 +48,16 @@ export default function FacilitiesSection() {
   const active = facilities.find((f) => f._id === activeId) || facilities[0];
 
   return (
-    <section className="w-full bg-[#f9f8f6] py-16 sm:py-24">
+    <section className="w-full bg-[#f8f6f2] py-20 sm:py-28">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header Section */}
-        <div className="flex flex-col items-center justify-center mb-12 sm:mb-16">
-          <p className="flex items-center gap-2 text-[#00a651] font-semibold text-sm mb-2">
+        <div className="flex flex-col items-center justify-center mb-12 sm:mb-16 text-center">
+          <p className="flex items-center gap-2 text-[#00a651] font-medium text-sm mb-2">
             <GraduationCap size={18} className="text-[#00a651]" />
             knowledge meets innovation
           </p>
-          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-[#1a1a1a]">
+          <h2 className="text-4xl sm:text-5xl font-serif font-bold text-[#111111]">
             Our Facilities
           </h2>
         </div>
@@ -73,7 +73,7 @@ export default function FacilitiesSection() {
                 <button
                   key={f._id}
                   onClick={() => setActiveId(f._id)}
-                  className={`w-full flex items-center justify-between px-6 py-4 transition-all duration-200 text-left rounded-sm ${
+                  className={`w-full flex items-center justify-between px-6 py-5 transition-all duration-200 text-left rounded-sm ${
                     isActive
                       ? "bg-white shadow-sm"
                       : "bg-white/90 hover:bg-white text-gray-800"
@@ -81,15 +81,15 @@ export default function FacilitiesSection() {
                 >
                   <span
                     className={`font-serif font-bold text-base sm:text-lg ${
-                      isActive ? "text-[#008d44]" : "text-[#222222]"
+                      isActive ? "text-[#00a651]" : "text-[#111111]"
                     }`}
                   >
                     {f.name}
                   </span>
 
                   {!isActive && (
-                    <span className="w-8 h-8 rounded-sm bg-[#eef5e9] text-[#9fc882] flex items-center justify-center shrink-0">
-                      <ArrowRight size={15} />
+                    <span className="w-8 h-8 rounded-sm bg-[#eaf4ec] text-[#a0cbab] flex items-center justify-center shrink-0">
+                      <ArrowRight size={14} />
                     </span>
                   )}
                 </button>
@@ -97,28 +97,28 @@ export default function FacilitiesSection() {
             })}
           </div>
 
-          {/* RIGHT COLUMN: Active Facility Details Card (8 Cols) */}
-          <div className="lg:col-span-8 bg-white shadow-sm flex flex-col md:flex-row min-h-[480px]">
+          {/* RIGHT COLUMN: Active Facility Card (Increased Height: 600px) */}
+          <div className="lg:col-span-8 bg-white shadow-sm flex flex-col md:flex-row min-h-[600px]">
             
-            {/* Facility Image */}
-            <div className="relative w-full md:w-[45%] h-[320px] md:h-auto shrink-0">
+            {/* Facility Image Container */}
+            <div className="relative w-full md:w-1/2 h-[400px] md:h-auto shrink-0">
               <Image
                 src={active.image}
                 alt={active.title}
                 fill
                 className="object-cover object-center"
-                sizes="(max-width: 1024px) 100vw, 35vw"
+                sizes="(max-width: 1024px) 100vw, 40vw"
                 priority
               />
             </div>
 
-            {/* Facility Description & CTA */}
-            <div className="p-8 sm:p-12 flex flex-col justify-between w-full md:w-[55%]">
+            {/* Facility Description & CTA (Increased Padding) */}
+            <div className="p-10 sm:p-14 flex flex-col justify-between w-full md:w-1/2">
               <div>
-                <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#008d44] mb-6 leading-tight">
+                <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#00a651] mb-6 leading-tight">
                   {active.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed mb-6 whitespace-pre-line font-sans break-words [overflow-wrap:anywhere]">
+                <p className="text-gray-600 text-base leading-relaxed mb-6 whitespace-pre-line font-sans break-words">
                   {active.description}
                 </p>
                 <a
@@ -130,7 +130,7 @@ export default function FacilitiesSection() {
               </div>
 
               <div>
-                <button className="bg-[#008d44] hover:bg-[#007337] text-white text-xs tracking-wider font-semibold px-6 py-3.5 rounded-none inline-flex items-center gap-2 transition-colors cursor-pointer">
+                <button className="bg-[#00a651] hover:bg-[#008c44] text-white text-xs font-semibold px-7 py-4 rounded-none inline-flex items-center gap-2 transition-colors cursor-pointer">
                   View Our Program <ArrowRight size={14} />
                 </button>
               </div>
