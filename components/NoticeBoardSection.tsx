@@ -36,36 +36,36 @@ function BoardColumn({
   return (
     <div className="flex flex-col w-full">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#008844]">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif font-bold text-[#008d44]">
           {title}
         </h2>
         <a
           href={viewAllLink}
-          className="text-xs font-semibold tracking-wide text-[#008844] underline flex items-center gap-1 hover:opacity-80 transition-opacity"
+          className="text-xs md:text-sm font-semibold tracking-wide text-[#008d44] underline flex items-center gap-1 hover:opacity-80 transition-opacity"
         >
-          View All <ArrowUpRight size={14} />
+          View All <ArrowUpRight size={16} />
         </a>
       </div>
 
-      {/* Main Container Card (Fixed height for equal board sizing) */}
-      <div className="bg-[#e8ebf0] p-3 md:p-4 rounded-sm flex flex-col h-[520px]">
+      {/* Main Container Card (Height Increased to 620px) */}
+      <div className="bg-[#eaedf2] p-4 md:p-6 rounded-none flex flex-col h-[620px] w-full">
         
         {/* Navigation Tabs */}
-        <div className="flex bg-[#dc021d]/0 bg-[#dbe0e6] rounded-sm overflow-hidden mb-3 shrink-0">
+        <div className="flex bg-[#dce1e8] overflow-hidden mb-4 shrink-0">
           {tabs.map((tab, i) => {
             const isActive = activeTab === tab;
             return (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`flex-1 py-3 px-2 text-xs md:text-sm font-semibold transition-all relative ${
+                className={`flex-1 py-3.5 px-3 text-xs md:text-sm font-bold transition-all relative ${
                   isActive
-                    ? "bg-white text-[#00a651] border-t-2 border-[#00a651] shadow-xs z-10"
+                    ? "bg-white text-[#00a651] border-t-2 border-[#00a651] shadow-xs"
                     : "text-gray-600 hover:text-gray-900 hover:bg-gray-200/60"
                 } ${
                   i < tabs.length - 1 && !isActive && activeTab !== tabs[i + 1]
-                    ? "border-r border-gray-300/60"
+                    ? "border-r border-gray-300/70"
                     : ""
                 }`}
               >
@@ -75,30 +75,30 @@ function BoardColumn({
           })}
         </div>
 
-        {/* Scrollable Notice Item List (Equal height scroll container) */}
-        <div className="flex-1 overflow-y-auto space-y-3 pr-0.5 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none]">
+        {/* Scrollable Notice Item List */}
+        <div className="flex-1 overflow-y-auto space-y-3.5 pr-0.5 scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none]">
           {filtered.map((item) => (
             <div
               key={item._id}
-              className="bg-white rounded-sm p-4 flex items-center gap-4 shadow-xs hover:shadow-sm transition-shadow"
+              className="bg-white rounded-none p-5 flex items-center gap-5 shadow-xs hover:shadow-sm transition-shadow"
             >
               {/* Date Box */}
-              <div className="flex flex-col items-center justify-center shrink-0 w-16">
-                <p className="text-2xl font-bold text-[#2d3748] leading-none mb-1">
+              <div className="flex flex-col items-center justify-center shrink-0 w-20">
+                <p className="text-3xl font-bold text-[#2d3748] leading-none mb-1">
                   {item.day}
                 </p>
-                <span className="bg-[#00a651] text-white text-[10px] font-bold tracking-wide uppercase px-2.5 py-0.5 rounded-xs">
+                <span className="bg-[#00a651] text-white text-xs font-bold tracking-wide uppercase px-3 py-0.5 rounded-none">
                   {item.month}
                 </span>
               </div>
 
-              {/* Notice Title & Metadata */}
+              {/* Notice Title & Time */}
               <div className="flex-1 min-w-0">
-                <p className="text-[#2d3748] text-sm font-medium leading-snug line-clamp-2 mb-1">
+                <p className="text-[#2d3748] text-base font-semibold leading-snug line-clamp-2 mb-1.5">
                   "{item.title}"
                 </p>
-                <div className="flex items-center gap-1.5 text-xs text-gray-500">
-                  <Clock size={12} className="text-gray-400 shrink-0" />
+                <div className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
+                  <Clock size={14} className="text-gray-400 shrink-0" />
                   <span>{item.time}</span>
                 </div>
               </div>
@@ -106,7 +106,7 @@ function BoardColumn({
           ))}
 
           {filtered.length === 0 && (
-            <div className="bg-white rounded-sm h-full flex items-center justify-center text-sm text-gray-400 font-medium">
+            <div className="bg-white rounded-none h-full flex items-center justify-center text-base text-gray-400 font-medium">
               No items in this category yet.
             </div>
           )}
@@ -132,27 +132,31 @@ export default function NoticeBoardSection() {
   }, []);
 
   if (loading) {
-    return <section className="w-full h-[580px] bg-gray-50 animate-pulse" />;
+    return <section className="w-full h-[700px] bg-gray-50 animate-pulse" />;
   }
 
   const noticeItems = items.filter((i) => i.board === "notice");
   const publicationItems = items.filter((i) => i.board === "publication");
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16 sm:py-24">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10 items-start">
-        <BoardColumn
-          title="Notice Board"
-          tabs={NOTICE_TABS}
-          items={noticeItems}
-          viewAllLink="/notice"
-        />
-        <BoardColumn
-          title="Publication"
-          tabs={PUBLICATION_TABS}
-          items={publicationItems}
-          viewAllLink="/publication"
-        />
+    // Outer section background forced to clean white
+    <section className="w-full bg-white py-16 sm:py-24">
+      {/* Maximum width expanded to 1400px */}
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-start">
+          <BoardColumn
+            title="Notice Board"
+            tabs={NOTICE_TABS}
+            items={noticeItems}
+            viewAllLink="/notice"
+          />
+          <BoardColumn
+            title="Publication"
+            tabs={PUBLICATION_TABS}
+            items={publicationItems}
+            viewAllLink="/publication"
+          />
+        </div>
       </div>
     </section>
   );
