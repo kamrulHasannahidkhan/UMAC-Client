@@ -25,12 +25,12 @@ const recentPosts = [
   {
     date: "August 6, 2024",
     title: "Those Inequalities Are Inequalities That",
-    img: "/post1.jpg",
+    img: "/post1.png",
   },
   {
     date: "July 4, 2024",
     title: "After Decades Of Improvement, Cardiovascular",
-    img: "/post2.jpg",
+    img: "/post2.png",
   },
 ];
 

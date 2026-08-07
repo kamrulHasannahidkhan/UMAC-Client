@@ -12,7 +12,7 @@ import PrincipalMessageSection from "@/components/PrincipalMessageSection";
 import PageBanner from "@/components/PageBanner";
 import TestimonialsSection from "@/components/TestimonialsSection";
 
-type HistoryItem = { _id: string; year: string; title: string; description: string; order: number };
+type HistoryItem = { _id: string; year: string; title: string; description?: string; order?: number };
 type Vision = { heading: string; description: string; image: string };
 type Objective = { title: string; description: string };
 type Aim = { aim: string; objectives: Objective[] };
@@ -71,19 +71,23 @@ function AboutPageContent() {
       fetch(`${API_URL}/api/about-history`).then((r) => r.json()),
       fetch(`${API_URL}/api/about-vision`).then((r) => r.json()),
       fetch(`${API_URL}/api/about-aim`).then((r) => r.json()),
-      fetch(`${API_URL}/api/about-people`).then((r) => r.json()),
+      fetch(`${API_URL}/api/about-[#008d44]people`).catch(() => null),
       fetch(`${API_URL}/api/about-org-structure`).then((r) => r.json()),
     ])
       .then(([historyJson, visionJson, aimJson, peopleJson, orgJson]) => {
-        if (historyJson.success) setHistory(historyJson.data);
-        if (visionJson.success) setVision(visionJson.data);
-        if (aimJson.success) setAim(aimJson.data);
-        if (peopleJson.success) setPeople(peopleJson.data);
-        if (orgJson.success && orgJson.data) setOrgStructureImage(orgJson.data.image);
+        if (historyJson?.success) setHistory(historyJson.data);
+        if (visionJson?.success) setVision(visionJson.data);
+        if (aimJson?.success) setAim(aimJson.data);
+        if (peopleJson?.success) setPeople(peopleJson.data);
+        if (orgJson?.success && orgJson.data) setOrgStructureImage(orgJson.data.image);
       })
       .catch((err) => console.error("Failed to load About page data:", err))
       .finally(() => setLoading(false));
   }, []);
+
+  // Split history entries into two rows (4 items per row)
+  const historyRow1 = history.slice(0, 4);
+  const historyRow2 = history.slice(4, 8);
 
   return (
     <div className="w-full bg-white text-gray-900 font-sans min-h-screen">
@@ -133,18 +137,69 @@ function AboutPageContent() {
           ) : (
             <>
               {activeTab === "History of UAMC" && (
-                <div>
-                  <h2 className="text-3xl font-serif font-bold text-center mb-2">Timeline of UAMC's Evolution</h2>
-                  <p className="text-center text-gray-500 mb-12">Since - 1984</p>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                    {history.map((item) => (
-                      <div key={item._id}>
-                        <p className="text-3xl font-serif font-bold text-green-700 mb-2">{item.year}</p>
-                        <p className="font-semibold mb-1">{item.title}</p>
-                        <p className="text-sm text-gray-500">{item.description}</p>
+                <div className="py-6 max-w-6xl mx-auto">
+                  {/* Timeline Header */}
+                  <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-serif font-bold text-[#2d3748] mb-1">
+                      Timeline of UAMC’s Evolution
+                    </h2>
+                    <p className="text-2xl md:text-3xl font-serif font-bold text-[#2d3748] mb-5">
+                      Since - 1984
+                    </p>
+                    <p className="text-xs md:text-sm text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                      Founded in 2007, UAMC, under BHSRA, is a leading medical institution affiliated with Dhaka University. With a 500-bed hospital, it excels in medical education, research, and patient care, shaping the future of healthcare in Bangladesh.
+                    </p>
+                  </div>
+
+                  {/* Redesigned Graphic Timeline */}
+                  <div className="space-y-16">
+                    {/* Row 1 */}
+                    <div className="relative">
+                      {/* Line connecting nodes on desktop */}
+                      <div className="hidden md:block absolute top-[11px] left-[10%] right-[10%] h-[1.5px] bg-[#8fae9b] z-0" />
+
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 relative z-10">
+                        {historyRow1.map((item) => (
+                          <div key={item._id} className="flex flex-col items-center text-center">
+                            {/* Circle Node */}
+                            <div className="w-6 h-6 rounded-full border-2 border-[#008d44] bg-white flex items-center justify-center mb-4 shrink-0 shadow-xs">
+                              <div className="w-2 h-2 rounded-full bg-[#008d44]" />
+                            </div>
+                            <span className="text-3xl md:text-4xl font-bold text-[#008d44] mb-1.5 leading-none">
+                              {item.year}
+                            </span>
+                            <p className="text-sm font-semibold text-gray-800 leading-tight max-w-[180px]">
+                              {item.title}
+                            </p>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                    {history.length === 0 && <p className="text-sm text-gray-400 col-span-full">No history entries yet.</p>}
+                    </div>
+
+                    {/* Row 2 */}
+                    {historyRow2.length > 0 && (
+                      <div className="relative">
+                        {/* Line connecting nodes on desktop */}
+                        <div className="hidden md:block absolute top-[11px] left-[10%] right-[10%] h-[1.5px] bg-[#8fae9b] z-0" />
+
+                        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-4 relative z-10">
+                          {historyRow2.map((item) => (
+                            <div key={item._id} className="flex flex-col items-center text-center">
+                              {/* Circle Node */}
+                              <div className="w-6 h-6 rounded-full border-2 border-[#008d44] bg-white flex items-center justify-center mb-4 shrink-0 shadow-xs">
+                                <div className="w-2 h-2 rounded-full bg-[#008d44]" />
+                              </div>
+                              <span className="text-3xl md:text-4xl font-bold text-[#008d44] mb-1.5 leading-none">
+                                {item.year}
+                              </span>
+                              <p className="text-sm font-semibold text-gray-800 leading-tight max-w-[180px]">
+                                {item.title}
+                              </p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
