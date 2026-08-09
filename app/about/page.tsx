@@ -16,7 +16,20 @@ type HistoryItem = { _id: string; year: string; title: string; description?: str
 type Vision = { heading: string; description: string; image: string };
 type Objective = { title: string; description: string };
 type Aim = { aim: string; objectives: Objective[] };
-type Person = { _id: string; group: string; name?: string; title?: string; photo: string; order: number };
+
+type Person = {
+  _id: string;
+  group: string;
+  name?: string;
+  fullName?: string;
+  memberName?: string;
+  personName?: string;
+  member_name?: string;
+  title?: string;
+  designation?: string;
+  photo: string;
+  order: number;
+};
 
 const TABS = [
   "Overview",
@@ -35,9 +48,24 @@ function PeopleGrid({ people }: { people: Person[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {people.map((p) => {
-        // Fallback hierarchy: p.name -> p.title -> "Member"
-        const displayName = p.name && p.name.trim() !== "" ? p.name.trim() : (p.title && p.title.trim() !== "" ? p.title.trim() : "Member");
-        const displayTitle = p.name && p.name.trim() !== "" ? p.title : "";
+        // Extract name and title safely
+        const nameText = (
+          p.name ||
+          p.fullName ||
+          p.memberName ||
+          p.personName ||
+          p.member_name ||
+          ""
+        ).toString().trim();
+
+        const titleText = (
+          p.title ||
+          p.designation ||
+          ""
+        ).toString().trim();
+
+        const displayName = nameText || "Unnamed Member";
+        const displayTitle = titleText;
 
         return (
           <div
@@ -54,7 +82,7 @@ function PeopleGrid({ people }: { people: Person[] }) {
               />
             </div>
             <p className="font-bold text-gray-900 text-base mb-1">{displayName}</p>
-            {displayTitle && <p className="text-xs text-[#008d44] font-medium">{displayTitle}</p>}
+            {displayTitle && <p className="text-xs text-gray-600 font-medium">{displayTitle}</p>}
           </div>
         );
       })}
