@@ -33,8 +33,11 @@ const navLinks = [
     label: "ADMISSION",
     href: "/admission",
     dropdown: [
-      { label: "MBBS Admission", tab: "MBBS" },
-      { label: "Foreign Students", tab: "Foreign" },
+      { label: "Admission Procedure & Fees", tab: "procedure" },
+      { label: "Admission Papers", tab: "papers" },
+      { label: "Application Form", tab: "forms" },
+      { label: "Admission Results", tab: "results" },
+      { label: "Online Registration", tab: "registration" },
     ],
   },
   { label: "NOTICE & MEDIA", href: "/notice" },
