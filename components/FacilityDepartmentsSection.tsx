@@ -46,9 +46,10 @@ export default function FacilityDepartmentsSection() {
             <div className="p-3">
               <p className="text-xs font-semibold text-gray-800 line-clamp-2 mb-1">{dept.name}</p>
               <p className="text-[11px] text-gray-400 mb-2">Established: {dept.establishedDate}</p>
-              
+              <a
                 href={dept.learnMoreLink}
                 className="inline-block text-[11px] font-semibold bg-[#008d44] text-white px-3 py-1 hover:bg-[#007337] transition-colors"
+                
               >
                 Learn More
               </a>

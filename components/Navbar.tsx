@@ -21,12 +21,20 @@ const navLinks = [
       { label: "GB Members", tab: "GB Members" },
     ],
   },
-  {
+ {
     label: "FACILITIES",
     href: "/facilities",
     dropdown: [
-      { label: "Hospital Facilities", tab: "Hospital" },
-      { label: "Academic Facilities", tab: "Academic" },
+      { label: "Hospital Service", tab: "hospital" },
+      { label: "Departments", tab: "departments" },
+      { label: "Library", tab: "library" },
+      { label: "Medical Education Unit", tab: "meu" },
+      { label: "Training", tab: "training" },
+      { label: "Publications", tab: "publications" },
+      { label: "Seminar", tab: "seminar" },
+      { label: "Hostel", tab: "hostel" },
+      { label: "Laboratory", tab: "laboratory" },
+      { label: "Cafeteria", tab: "cafeteria" },
     ],
   },
   {

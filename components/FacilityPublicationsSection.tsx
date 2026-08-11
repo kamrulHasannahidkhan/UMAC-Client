@@ -66,7 +66,7 @@ export default function FacilityPublicationsSection() {
                 <td className="py-3 pr-4 text-gray-800 font-medium">{doc.title}</td>
                 <td className="py-3 pl-4">
                   <div className="flex items-center justify-end gap-2">
-                    
+                    <a
                       href={doc.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
