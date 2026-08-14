@@ -28,59 +28,69 @@ export default function NoticeBanner() {
   }, []);
 
   if (loading) {
-    return <section className="w-full h-[480px] bg-gray-100 animate-pulse" />;
+    return <section className="w-full h-[440px] sm:h-[480px] bg-emerald-50/60 animate-pulse" />;
   }
 
   if (!content) {
     return (
-      <section className="w-full py-20 text-center text-gray-400">
-        No Notice & Media banner yet — add it from the admin panel.
+      <section className="w-full py-20 text-center text-gray-400 bg-gray-50 border-b border-gray-100 text-sm">
+        No Notice & Media banner configured yet — add it from the admin panel.
       </section>
     );
   }
 
   return (
-    <section className="relative w-full h-[480px] flex items-center justify-center overflow-hidden bg-[#e4f3e6]">
-      {/* 1. Background Pattern Illustration */}
-      <Image
-        src={content.bgImage}
-        alt="Banner Background"
-        fill
-        className="object-cover object-center"
-        sizes="100vw"
-        priority
-      />
+    <section className="relative w-full h-[440px] sm:h-[480px] overflow-hidden bg-white flex items-center justify-center px-4 sm:px-8">
+      {/* 1. Full-width Background Pattern */}
+      {content.bgImage && (
+        <Image
+          src={content.bgImage}
+          alt=""
+          fill
+          className="object-cover object-center opacity-85"
+          priority
+          sizes="100vw"
+        />
+      )}
 
-      {/* 2. 70% Blurred Green Overlay Box */}
-      <div className="relative z-10 max-w-7xl w-[92%] mx-auto h-[280px] bg-[#9bcbb1]/70 backdrop-blur-md rounded-sm px-8 md:px-14 flex items-center justify-between shadow-sm">
-        {/* Left Side: Breadcrumbs & Page Heading */}
-        <div className="flex flex-col justify-center">
-          {/* Breadcrumb Navigation (2-level, no sub-tab) */}
-          <div className="text-sm md:text-base font-bold text-gray-800 tracking-wider mb-3 flex items-center gap-2 uppercase">
-            <Link href="/" className="hover:text-[#008d44] transition-colors">
-              HOME
-            </Link>
-            <span className="text-gray-700 font-semibold">&gt;</span>
-            <span className="text-[#008d44] font-bold">NOTICE & MEDIA</span>
-          </div>
+      {/* 2. Glassmorphism Inner Card Container */}
+      <div className="relative z-10 w-full max-w-5xl bg-[#9ecfc0]/80 backdrop-blur-md border border-[#85beaf]/50 rounded-2xl px-6 sm:px-12 py-12 sm:py-16 shadow-sm flex items-center justify-between gap-6">
+        
+        {/* Left Side: Breadcrumbs & Dynamic Heading */}
+        <div className="flex-1 min-w-0">
+          {/* Breadcrumb Links */}
+          <nav aria-label="Breadcrumb" className="mb-3">
+            <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0f2418]/70 flex items-center flex-wrap gap-1">
+              <Link href="/" className="hover:text-[#0f2418] transition-colors">
+                HOME
+              </Link>
+              <span>&gt;</span>
+              <span>NOTICE & MEDIA</span>
+              <span className="text-[#0a522c]">&gt;&gt;</span>
+              <span className="text-[#0a522c] font-bold">ALL NOTICES</span>
+            </p>
+          </nav>
 
-          {/* Heading */}
-          <h1 className="text-5xl md:text-6xl font-serif text-[#2d3748]">
+          {/* Banner Title */}
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#1c3a2b] tracking-tight truncate">
             {content.headingPlain}{" "}
-            <span className="font-bold text-[#008d44]">{content.headingHighlight}</span>
+            <span className="text-[#0a5c30]">
+              {content.headingHighlight}
+            </span>
           </h1>
         </div>
 
-        {/* Right Side: Institutional Logo Seal */}
-        <div className="relative w-44 h-44 md:w-52 md:h-52 flex-shrink-0 drop-shadow-sm">
+        {/* Right Side: College Crest / Logo */}
+        <div className="shrink-0 relative w-20 h-20 sm:w-28 sm:h-28 drop-shadow-md">
           <Image
             src={content.logoImage || "/logo.png"}
-            alt="UAMC Logo"
+            alt="Uttara Adhunika Medical College Logo"
             fill
             className="object-contain"
-            sizes="(max-width: 768px) 176px, 208px"
+            priority
           />
         </div>
+
       </div>
     </section>
   );
