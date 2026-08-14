@@ -83,7 +83,7 @@ export default function CareerBanner() {
         {/* Right Side - College Crest Logo */}
         <div className="shrink-0 relative w-20 h-20 sm:w-28 sm:h-28 drop-shadow-md">
           <Image
-            src="/uamc-logo.png"
+            src="/logo.png"
             alt="Uttara Adhunika Medical College Logo"
             fill
             className="object-contain"
