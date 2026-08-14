@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Briefcase, Calendar, ArrowRight, ChevronDown, Sparkles, Building2, ExternalLink } from "lucide-react";
+import { Briefcase, Calendar, ChevronDown, Sparkles, Building2, ExternalLink } from "lucide-react";
 import CareerBanner from "@/components/CareerBanner";
 
 type Post = { _id: string; title: string; department: string; type: string; deadline: string; description: string; applyLink: string };
@@ -53,7 +53,7 @@ export default function CareerPage() {
               return (
                 <div
                   key={p._id}
-                  className={`bg-white border rounded-2xl overflow-hidden transition-all duration-200 ${
+                  className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${
                     isOpen
                       ? "border-emerald-700/40 shadow-md ring-1 ring-emerald-700/10"
                       : "border-slate-200/80 hover:border-slate-300 shadow-sm"
@@ -62,7 +62,8 @@ export default function CareerPage() {
                   {/* Header / Click Area */}
                   <button
                     onClick={() => setExpandedId(isOpen ? null : p._id)}
-                    className="w-full text-left p-5 sm:p-6 flex items-start sm:items-center justify-between gap-4 group"
+                    aria-expanded={isOpen}
+                    className="w-full text-left p-5 sm:p-6 flex items-start sm:items-center justify-between gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 rounded-2xl"
                   >
                     <div className="flex-1 min-w-0">
                       <h3 className="font-bold text-slate-900 text-base sm:text-lg group-hover:text-emerald-900 transition-colors mb-2">
@@ -83,34 +84,40 @@ export default function CareerPage() {
                     </div>
 
                     <div className={`p-2 rounded-xl bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-all shrink-0 ${isOpen ? "bg-emerald-100 text-emerald-900 rotate-180" : ""}`}>
-                      <ChevronDown size={18} className="transition-transform duration-200" />
+                      <ChevronDown size={18} className="transition-transform duration-300" />
                     </div>
                   </button>
 
-                  {/* Expanded Description & Apply CTA */}
-                  {isOpen && (
-                    <div className="px-5 sm:px-6 pb-6 pt-4 border-t border-slate-100 bg-slate-50/50">
-                      <div className="prose prose-slate max-w-none mb-6">
-                        <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line font-normal">
-                          {p.description}
-                        </p>
-                      </div>
-
-                      {p.applyLink && (
-                        <div className="pt-2">
-                          <a
-                            href={p.applyLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-[#0f2418] hover:bg-[#163725] active:scale-95 text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl transition-all shadow-sm shadow-emerald-950/20 group"
-                          >
-                            <span>Apply Now</span>
-                            <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                          </a>
+                  {/* Expanded Description & Apply CTA (Using CSS Grid for smooth height animation) */}
+                  <div 
+                    className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 sm:px-6 pb-6 pt-4 border-t border-slate-100 bg-slate-50/50">
+                        <div className="prose prose-slate max-w-none mb-6">
+                          <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line font-normal">
+                            {p.description}
+                          </p>
                         </div>
-                      )}
+
+                        {p.applyLink && (
+                          <div className="pt-2">
+                            <a
+                              href={p.applyLink}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 bg-[#0f2418] hover:bg-[#163725] active:scale-95 text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl transition-all shadow-sm shadow-emerald-950/20 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
+                            >
+                              <span>Apply Now</span>
+                              <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                            </a>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
