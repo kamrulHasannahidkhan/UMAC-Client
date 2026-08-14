@@ -51,7 +51,7 @@ export default function CareerPage() {
                   <div className="px-5 pb-5 border-t border-gray-100 pt-4">
                     <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line mb-4">{p.description}</p>
                     {p.applyLink && (
-                      
+                      <a
                         href={p.applyLink}
                         className="inline-flex items-center gap-2 bg-[#0f2418] text-white text-sm font-medium px-5 py-2.5 rounded-md hover:bg-[#173428] transition-colors"
                       >
