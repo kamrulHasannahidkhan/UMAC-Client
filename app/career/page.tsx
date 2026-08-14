@@ -1,10 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Briefcase, Calendar, ChevronDown, Sparkles, Building2, ExternalLink } from "lucide-react";
+import { Briefcase, Calendar, ChevronDown, Sparkles, Building2, ExternalLink, CheckCircle2 } from "lucide-react";
 import CareerBanner from "@/components/CareerBanner";
 
-type Post = { _id: string; title: string; department: string; type: string; deadline: string; description: string; applyLink: string };
+type Post = { 
+  _id: string; 
+  title: string; 
+  department: string; 
+  type: string; 
+  deadline: string; 
+  description: string; 
+  applyLink: string 
+};
+
 const API_URL = process.env.NEXT_PUBLIC_ADMIN_API_URL;
 
 export default function CareerPage() {
@@ -16,23 +25,28 @@ export default function CareerPage() {
     fetch(`${API_URL}/api/career-posts`)
       .then((res) => res.json())
       .then((json) => {
-        if (json.success) setPosts(json.data);
+        if (json.success) {
+          setPosts(json.data);
+          // Auto-expand the first post by default for better visual feedback
+          if (json.data.length > 0) setExpandedId(json.data[0]._id);
+        }
       })
       .finally(() => setLoading(false));
   }, []);
 
   return (
-    <main className="min-h-screen bg-slate-50/70 pb-20">
+    <main className="min-h-screen bg-slate-100/80 pb-24">
       <CareerBanner />
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-12 sm:pt-16">
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200/60 text-emerald-800 text-xs font-semibold mb-3">
-            <Sparkles size={13} /> Open Opportunities
+        <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-xs font-semibold shadow-xs mb-4">
+            <Sparkles size={14} className="text-emerald-600" /> 
+            <span>Open Opportunities</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900 tracking-tight mb-3">
-            Careers at UAMC
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-slate-900 tracking-tight mb-4">
+            Careers at <span className="text-[#0a5c30]">UAMC</span>
           </h1>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
             Join our dedicated academic & administrative team. Explore current openings and take the next step in your career.
@@ -41,80 +55,86 @@ export default function CareerPage() {
 
         {/* Job Listings Section */}
         {loading ? (
-          <div className="space-y-4 max-w-4xl mx-auto">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="h-24 bg-white rounded-2xl border border-slate-200/80 animate-pulse" />
+          <div className="space-y-4">
+            {[1, 2].map((i) => (
+              <div key={i} className="h-32 bg-white rounded-2xl border border-slate-200/80 animate-pulse shadow-sm" />
             ))}
           </div>
         ) : (
-          <div className="space-y-4 max-w-4xl mx-auto">
+          <div className="space-y-5">
             {posts.map((p) => {
               const isOpen = expandedId === p._id;
               return (
                 <div
                   key={p._id}
-                  className={`bg-white border rounded-2xl overflow-hidden transition-all duration-300 ${
+                  className={`bg-white border rounded-2xl transition-all duration-300 overflow-hidden ${
                     isOpen
-                      ? "border-emerald-700/40 shadow-md ring-1 ring-emerald-700/10"
-                      : "border-slate-200/80 hover:border-slate-300 shadow-sm"
+                      ? "border-emerald-600/40 shadow-lg ring-1 ring-emerald-600/20"
+                      : "border-slate-200/90 hover:border-slate-300 shadow-sm hover:shadow"
                   }`}
                 >
                   {/* Header / Click Area */}
                   <button
                     onClick={() => setExpandedId(isOpen ? null : p._id)}
                     aria-expanded={isOpen}
-                    className="w-full text-left p-5 sm:p-6 flex items-start sm:items-center justify-between gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2 rounded-2xl"
+                    className="w-full text-left p-6 sm:p-7 flex items-start sm:items-center justify-between gap-4 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 rounded-2xl"
                   >
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-bold text-slate-900 text-base sm:text-lg group-hover:text-emerald-900 transition-colors mb-2">
+                      <h2 className="font-bold text-slate-900 text-lg sm:text-xl group-hover:text-emerald-800 transition-colors mb-3">
                         {p.title}
-                      </h3>
+                      </h2>
                       
-                      <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700 font-medium">
-                          <Building2 size={13} className="text-slate-500" /> {p.department}
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 text-xs font-medium">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-700 border border-slate-200/60">
+                          <Building2 size={14} className="text-slate-500" /> {p.department}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 font-medium border border-emerald-100">
-                          <Briefcase size={13} className="text-emerald-700" /> {p.type}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+                          <Briefcase size={14} className="text-emerald-600" /> {p.type}
                         </span>
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 font-medium border border-amber-100">
-                          <Calendar size={13} className="text-amber-700" /> Deadline: {p.deadline}
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 text-amber-800 border border-amber-200/60">
+                          <Calendar size={14} className="text-amber-600" /> Deadline: {p.deadline}
                         </span>
                       </div>
                     </div>
 
-                    <div className={`p-2 rounded-xl bg-slate-100 text-slate-500 group-hover:bg-emerald-50 group-hover:text-emerald-800 transition-all shrink-0 ${isOpen ? "bg-emerald-100 text-emerald-900 rotate-180" : ""}`}>
-                      <ChevronDown size={18} className="transition-transform duration-300" />
+                    <div className={`p-2.5 rounded-xl bg-slate-100 text-slate-500 group-hover:bg-emerald-100 group-hover:text-emerald-900 transition-all shrink-0 ${isOpen ? "bg-emerald-100 text-emerald-900 rotate-180" : ""}`}>
+                      <ChevronDown size={20} className="transition-transform duration-300" />
                     </div>
                   </button>
 
-                  {/* Expanded Description & Apply CTA (Using CSS Grid for smooth height animation) */}
+                  {/* Expanded Body Content */}
                   <div 
                     className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
                       isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
                     }`}
                   >
                     <div className="overflow-hidden">
-                      <div className="px-5 sm:px-6 pb-6 pt-4 border-t border-slate-100 bg-slate-50/50">
-                        <div className="prose prose-slate max-w-none mb-6">
-                          <p className="text-sm text-slate-600 leading-relaxed whitespace-pre-line font-normal">
+                      <div className="px-6 sm:px-8 pb-7 pt-5 border-t border-slate-100 bg-slate-50/60">
+                        {/* Styled Description Box */}
+                        <div className="bg-white border border-slate-200/80 rounded-xl p-5 sm:p-6 mb-6 shadow-2xs">
+                          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
+                            <CheckCircle2 size={14} className="text-emerald-600" /> Job Overview & Requirements
+                          </h3>
+                          <div className="text-sm text-slate-700 leading-relaxed whitespace-pre-line font-normal">
                             {p.description}
-                          </p>
+                          </div>
                         </div>
 
-                        {p.applyLink && (
-                          <div className="pt-2">
-                            <a
-                              href={p.applyLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2 bg-[#0f2418] hover:bg-[#163725] active:scale-95 text-white text-xs sm:text-sm font-semibold px-5 py-2.5 rounded-xl transition-all shadow-sm shadow-emerald-950/20 group focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-600 focus-visible:ring-offset-2"
-                            >
-                              <span>Apply Now</span>
-                              <ExternalLink size={15} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                            </a>
-                          </div>
-                        )}
+                        {/* Apply Action Button */}
+                        <div className="flex items-center justify-between flex-wrap gap-4 pt-1">
+                          <p className="text-xs text-slate-500 italic">
+                            * Selected candidates will be contacted via email.
+                          </p>
+                          <a
+                            href={p.applyLink || "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 bg-[#0a522c] hover:bg-[#073d20] active:scale-[0.98] text-white text-sm font-semibold px-6 py-3 rounded-xl transition-all shadow-md shadow-emerald-900/15 group"
+                          >
+                            <span>Apply for this Position</span>
+                            <ExternalLink size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -130,7 +150,7 @@ export default function CareerPage() {
                 </div>
                 <h3 className="font-semibold text-slate-900 text-base mb-1">No Open Positions</h3>
                 <p className="text-sm text-slate-500 max-w-sm mx-auto">
-                  There are currently no job openings available. Please check back later or subscribe to college notices.
+                  There are currently no job openings available. Please check back later.
                 </p>
               </div>
             )}
