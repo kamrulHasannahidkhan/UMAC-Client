@@ -64,7 +64,7 @@ export default function AlumniPage() {
       <section className="relative text-white py-20 sm:py-28 px-4 sm:px-6 overflow-hidden">
         {/* Background Image with Preloading */}
         <Image
-          src="/alumni-banner.jpg" // Place your image inside /public/alumni-banner.jpg
+          src="/banner.png" // Place your image inside /public/alumni-banner.jpg
           alt="Alumni Banner Background"
           fill
           priority
