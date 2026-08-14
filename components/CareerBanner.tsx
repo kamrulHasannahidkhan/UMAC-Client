@@ -26,19 +26,21 @@ export default function CareerBanner() {
   }, []);
 
   if (loading) {
-    return <section className="w-full h-[220px] bg-emerald-50/60 animate-pulse" />;
+    /* Doubled Skeleton Loader Height */
+    return <section className="w-full h-[440px] sm:h-[480px] bg-emerald-50/60 animate-pulse" />;
   }
 
   if (!content) {
     return (
-      <section className="w-full py-10 text-center text-gray-400 bg-gray-50 border-b border-gray-100 text-sm">
+      <section className="w-full py-20 text-center text-gray-400 bg-gray-50 border-b border-gray-100 text-sm">
         No Career banner configured yet — add it from the admin panel.
       </section>
     );
   }
 
   return (
-    <section className="relative w-full h-[220px] sm:h-[240px] overflow-hidden bg-white flex items-center justify-center px-4 sm:px-8">
+    /* Doubled Section Height: h-[440px] sm:h-[480px] */
+    <section className="relative w-full h-[440px] sm:h-[480px] overflow-hidden bg-white flex items-center justify-center px-4 sm:px-8">
       {/* 1. Full-width Pattern Background */}
       {content.bgImage && (
         <Image
@@ -51,13 +53,13 @@ export default function CareerBanner() {
         />
       )}
 
-      {/* 2. Glassmorphism Inner Card Container */}
-      <div className="relative z-10 w-full max-w-5xl bg-[#9ecfc0]/80 backdrop-blur-md border border-[#85beaf]/50 rounded-xl px-6 sm:px-10 py-7 sm:py-8 shadow-sm flex items-center justify-between gap-6">
+      {/* 2. Glassmorphism Inner Card Container (with expanded vertical padding py-12 sm:py-16) */}
+      <div className="relative z-10 w-full max-w-5xl bg-[#9ecfc0]/80 backdrop-blur-md border border-[#85beaf]/50 rounded-2xl px-6 sm:px-12 py-12 sm:py-16 shadow-sm flex items-center justify-between gap-6">
         
         {/* Left Side - Breadcrumbs & Dynamic Heading */}
         <div className="flex-1 min-w-0">
           {/* Breadcrumb Links */}
-          <nav aria-label="Breadcrumb" className="mb-2">
+          <nav aria-label="Breadcrumb" className="mb-3">
             <p className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#0f2418]/70 flex items-center flex-wrap gap-1">
               <Link href="/" className="hover:text-[#0f2418] transition-colors">
                 HOME
@@ -70,7 +72,7 @@ export default function CareerBanner() {
           </nav>
 
           {/* Banner Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#1c3a2b] tracking-tight truncate">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#1c3a2b] tracking-tight truncate">
             {content.headingPlain}{" "}
             <span className="text-[#0a5c30]">
               {content.headingHighlight}
@@ -79,9 +81,9 @@ export default function CareerBanner() {
         </div>
 
         {/* Right Side - College Crest Logo */}
-        <div className="shrink-0 relative w-16 h-16 sm:w-20 sm:h-20 drop-shadow-md">
+        <div className="shrink-0 relative w-20 h-20 sm:w-28 sm:h-28 drop-shadow-md">
           <Image
-            src="/logo.png" // Replace with your college crest logo path if different
+            src="/uamc-logo.png"
             alt="Uttara Adhunika Medical College Logo"
             fill
             className="object-contain"
