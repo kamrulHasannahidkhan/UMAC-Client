@@ -2,36 +2,15 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import ComingSoonButton from "@/components/ComingSoonButton";
 import { MapPin, Phone, ArrowUpRight, Calendar } from "lucide-react";
 
-const campusLinks = [
-  "Academic",
-  "Athletics",
-  "Campus life",
-  "Research",
-  "Academic Area",
-];
-
-const pageLinks = [
-  "About",
-  "Tution Fee",
-  "Alumni",
-  "Faculty Staff",
-  "Event",
-];
+const campusLinks = ["Academic", "Athletics", "Campus life", "Research", "Academic Area"];
+const pageLinks = ["About", "Tution Fee", "Alumni", "Faculty Staff", "Event"];
 
 const recentPosts = [
-  {
-    date: "August 6, 2024",
-    title: "Those Inequalities Are Inequalities That",
-    img: "/post1.png",
-  },
-  {
-    date: "July 4, 2024",
-    title: "After Decades Of Improvement, Cardiovascular",
-    img: "/post2.png",
-  },
+  { date: "August 6, 2024", title: "Those Inequalities Are Inequalities That", img: "/post1.png" },
+  { date: "July 4, 2024", title: "After Decades Of Improvement, Cardiovascular", img: "/post2.png" },
 ];
 
 const API_URL = process.env.NEXT_PUBLIC_ADMIN_API_URL;
@@ -97,12 +76,8 @@ export default function Footer() {
                 <ArrowUpRight size={16} />
               </button>
             </div>
-            {status === "success" && (
-              <p className="text-xs text-green-400 mt-2">Subscribed — thank you!</p>
-            )}
-            {status === "error" && (
-              <p className="text-xs text-red-400 mt-2">{errorMsg}</p>
-            )}
+            {status === "success" && <p className="text-xs text-green-400 mt-2">Subscribed — thank you!</p>}
+            {status === "error" && <p className="text-xs text-red-400 mt-2">{errorMsg}</p>}
           </form>
         </div>
       </div>
@@ -110,24 +85,13 @@ export default function Footer() {
       {/* Main Footer Content Grid */}
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
-          
           {/* Column 1: College Info */}
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-3">
-              <Image
-                src="/logo.png"
-                alt="UAMC Logo"
-                width={42}
-                height={42}
-                className="object-contain"
-              />
+              <Image src="/logo.png" alt="UAMC Logo" width={42} height={42} className="object-contain" />
               <div>
-                <p className="font-bold text-white text-base leading-tight">
-                  Uttara Adhunik
-                </p>
-                <p className="text-xs text-gray-400 leading-tight">
-                  Medical College (UAMC)
-                </p>
+                <p className="font-bold text-white text-base leading-tight">Uttara Adhunik</p>
+                <p className="text-xs text-gray-400 leading-tight">Medical College (UAMC)</p>
               </div>
             </div>
             <p className="text-xs sm:text-sm text-gray-400 leading-relaxed max-w-sm mt-1">
@@ -153,12 +117,9 @@ export default function Footer() {
             <ul className="space-y-3.5 text-xs sm:text-sm">
               {campusLinks.map((link) => (
                 <li key={link}>
-                  <Link
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
+                  <ComingSoonButton className="text-gray-400 hover:text-white transition-colors">
                     {link}
-                  </Link>
+                  </ComingSoonButton>
                 </li>
               ))}
             </ul>
@@ -172,12 +133,9 @@ export default function Footer() {
             <ul className="space-y-3.5 text-xs sm:text-sm">
               {pageLinks.map((link) => (
                 <li key={link}>
-                  <Link
-                    href="#"
-                    className="text-gray-400 hover:text-white transition-colors"
-                  >
+                  <ComingSoonButton className="text-gray-400 hover:text-white transition-colors">
                     {link}
-                  </Link>
+                  </ComingSoonButton>
                 </li>
               ))}
             </ul>
@@ -192,12 +150,7 @@ export default function Footer() {
               {recentPosts.map((post) => (
                 <div key={post.title} className="flex gap-3.5 items-start">
                   <div className="relative w-14 h-14 sm:w-16 sm:h-16 shrink-0 bg-gray-800 rounded-none overflow-hidden">
-                    <Image
-                      src={post.img}
-                      alt={post.title}
-                      fill
-                      className="object-cover"
-                    />
+                    <Image src={post.img} alt={post.title} fill className="object-cover" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="flex items-center gap-1.5 text-[11px] text-gray-400 mb-1">
@@ -212,14 +165,12 @@ export default function Footer() {
               ))}
             </div>
           </div>
-
         </div>
       </div>
 
       {/* Bottom Copyright Bar */}
       <div className="border-t border-gray-900 py-6 text-center text-xs text-gray-500">
-        Copyright @ 2024. All Rights Reserved by{" "}
-        <span className="text-white font-medium">Unipix</span>
+        Copyright @ 2024. All Rights Reserved by <span className="text-white font-medium">Unipix</span>
       </div>
     </footer>
   );

@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowRight, GraduationCap } from "lucide-react";
+import ComingSoonButton from "@/components/ComingSoonButton";
 
 type Slide = {
   _id: string;
@@ -67,7 +68,7 @@ export default function HeroSection() {
 
   return (
     <section className="relative w-full h-[95vh] min-h-[750px] max-h-[980px] overflow-hidden text-white font-sans bg-white">
-      {/* Background Slides with Forced Full Bleed */}
+      {/* Background Slides */}
       {slides.map((s, i) => (
         <div
           key={s._id}
@@ -86,15 +87,11 @@ export default function HeroSection() {
         </div>
       ))}
 
-      {/* Light Overlay to preserve image colors */}
       <div className="absolute inset-0 bg-black/10" />
 
-      {/* Top Header Pagination Bar */}
+      {/* Top Header Pagination Bar — real controls, kept as buttons */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-8 pt-10 flex items-center justify-between text-xs tracking-widest font-semibold uppercase">
-        <button
-          onClick={goPrev}
-          className="text-gray-200 hover:text-white transition-colors cursor-pointer"
-        >
+        <button onClick={goPrev} className="text-gray-200 hover:text-white transition-colors cursor-pointer">
           PREV
         </button>
 
@@ -104,24 +101,17 @@ export default function HeroSection() {
               <button
                 onClick={() => setActive(i)}
                 className={`transition-colors cursor-pointer ${
-                  i === active
-                    ? "text-[#facc15] font-bold text-sm"
-                    : "text-white/80 hover:text-white text-xs"
+                  i === active ? "text-[#facc15] font-bold text-sm" : "text-white/80 hover:text-white text-xs"
                 }`}
               >
                 {String(i + 1).padStart(2, "0")}
               </button>
-              {i < slides.length - 1 && (
-                <span className="text-white/30 text-xs">|</span>
-              )}
+              {i < slides.length - 1 && <span className="text-white/30 text-xs">|</span>}
             </div>
           ))}
         </div>
 
-        <button
-          onClick={goNext}
-          className="text-gray-200 hover:text-white transition-colors cursor-pointer"
-        >
+        <button onClick={goNext} className="text-gray-200 hover:text-white transition-colors cursor-pointer">
           NEXT
         </button>
       </div>
@@ -130,7 +120,6 @@ export default function HeroSection() {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 h-[calc(100%-100px)] flex items-end pb-16">
         <div className="w-full bg-[#0a3d24]/35 backdrop-blur-[3px] border border-white/20 rounded-sm p-8 md:p-12 lg:p-14 shadow-xl">
           <div className="flex flex-col lg:flex-row w-full items-end justify-between gap-10">
-            
             {/* Left Content */}
             <div className="max-w-2xl">
               <p className="flex items-center gap-2 text-xs md:text-sm mb-4 text-gray-100 font-normal tracking-wide">
@@ -142,22 +131,18 @@ export default function HeroSection() {
                 <span className="font-bold">{slide.titleLine1}</span>{" "}
                 <span className="font-serif italic text-white">in Medical</span>
                 <br />
-                <span className="font-serif italic text-[#facc15] font-semibold">
-                  {slide.highlight}
-                </span>
+                <span className="font-serif italic text-[#facc15] font-semibold">{slide.highlight}</span>
                 <span className="font-serif">, {slide.titleLine2}</span>
               </h1>
 
-              <button className="bg-white text-[#0a3d24] font-semibold text-xs tracking-wider uppercase px-7 py-4 rounded-sm flex items-center gap-2 hover:bg-gray-100 transition-all shadow-md">
+              <ComingSoonButton className="bg-white text-[#0a3d24] font-semibold text-xs tracking-wider uppercase px-7 py-4 rounded-sm inline-flex items-center gap-2 hover:bg-gray-100 transition-all shadow-md">
                 View Our Program <ArrowRight size={14} />
-              </button>
+              </ComingSoonButton>
             </div>
 
             {/* Right Side: MBBS Degrees */}
             <div className="hidden lg:block w-80 shrink-0">
-              <h3 className="text-[#facc15] text-2xl font-serif font-bold mb-6">
-                MBBS Degrees
-              </h3>
+              <h3 className="text-[#facc15] text-2xl font-serif font-bold mb-6">MBBS Degrees</h3>
               <div className="space-y-6">
                 {degrees.map((d) => (
                   <div key={d.title} className="border-t border-white/25 pt-4">
@@ -167,14 +152,11 @@ export default function HeroSection() {
                       </p>
                       <ArrowRight size={15} className="text-white shrink-0 group-hover:translate-x-1 transition-transform" />
                     </div>
-                    <p className="text-xs text-gray-100 leading-relaxed font-light">
-                      {d.desc}
-                    </p>
+                    <p className="text-xs text-gray-100 leading-relaxed font-light">{d.desc}</p>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </div>
