@@ -15,7 +15,7 @@ export default function AdmissionProcedureSection() {
         </div>
         <div className="relative w-full h-56 rounded-none overflow-hidden bg-gray-100">
           <Image
-            src="/image.png"
+            src="/Image.png"
             alt="Admission Procedure"
             fill
             className="object-cover"
